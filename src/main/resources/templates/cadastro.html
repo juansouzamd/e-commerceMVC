@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira, Thiago shigueto">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/paginaLogin.css"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="forms-container">
+        <div class="signin-signup">
+            <form action="/cadastro" class="sign-in-form" method="post">
+                <h2 class="title">Realize seu cadastro</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Nome" th:field="${usuario.nome}"/>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-file"></i>
+                    <input type="text" placeholder="CPF" th:field="${usuario.cpf}"/>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" placeholder="Telefone" th:field="${usuario.telefone}"/>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-calendar"></i>
+                    <input type="text" placeholder="Data de Nascimento" th:field="${usuario.dataNascimento}"/>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" placeholder="E-mail" th:field="${usuario.email}"/>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Senha" th:field="${usuario.senha}"/>
+                </div>
+                <input type="submit" class="btn" value="cadastrar"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="panels-container">
+    <div class="panel left-panel">
+        <div class="content">
+            <h3>Deseja efetuar o login?</h3>
+            <p>Caso tenha uma conta entre e fique por dentro de todas as novidades!!</p>
+            <a href="/login" class="btn transparent" id="sign-up-btn">Logar conta</a>
+        </div>
+        <img src="/img/front-end/login/tenis02.png" class="image" alt=""/>
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>
