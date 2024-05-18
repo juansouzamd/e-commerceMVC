@@ -38,65 +38,45 @@
 </section>
 
 <div class="usuario">
-    <div class="form">
-        <form action="/criar-endereco?id=${usuario.id}" class="sign-in-form" method="post">
+    <form action="/usuario/endereco" class="sign-in-form" method="post" th:object="${endereco}">
+        <h2 class="title">Cadastrar endereço</h2>
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Rua" name="rua" id="user-rua" th:field="*{rua}" required/>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="number" placeholder="Número" name="numero" id="user-numero" th:field="*{numero}" required/>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Bairro" name="bairro" id="user-bairro" th:field="*{bairro}" required/>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Cep" name="cep" id="user-cep" th:field="*{cep}" required/>
+        </div>
+        <input type="hidden" name="usuario.id" id="user-id" th:value="${usuario.id}"/>
+        <input type="submit" class="btn" value="Cadastrar" />
+    </form>
 
-            <h2 class="title">Cadastrar endereço</h2>
-
-            <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Rua" name="user-rua" id="user-rua" />
-            </div>
-
-            <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Número" name="user-numero" id="user-numero" />
-            </div>
-
-            <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Bairro" name="user-bairro" id="user-bairro" />
-            </div>
-
-            <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Cep" name="user-cep" id="user-cep"  />
-            </div>
-            <input hidden type="text" placeholder="id" name="user-id" id="user-id" value="${usuario.id}" />
-
-            <input type="submit" class="btn" value="Cadastrar" />
-
-        </form>
-
-    </div>
 
     <div class="dadosTotal">
-
         <div class="total">
-            <h3 class="nomes h3nome">Nome: <p class="nome">${usuario.nome}</p>
-            </h3>
+            <h3 class="nomes h3nome">Nome: <span class="nome" th:text="${usuario.nome}">Nome</span></h3>
         </div>
-
         <div class="total">
-            <h3 class="nomes">E-mail: <p class="email">${usuario.email}</p>
-            </h3>
+            <h3 class="nomes">E-mail: <span class="email" th:text="${usuario.email}">Email</span></h3>
         </div>
-
         <div class="total">
-            <h3 class="nomes">Telefone: <p class="telefone">${usuario.telefone}</p>
-            </h3>
+            <h3 class="nomes">Telefone: <span class="telefone" th:text="${usuario.telefone}">Telefone</span></h3>
         </div>
-
         <div class="total">
-            <h3 class="nomes">Data de nascimento: <p class="dataNasc">${usuario.dataNascimento}</p>
-            </h3>
+            <h3 class="nomes">Data de nascimento: <span class="dataNasc" th:text="${usuario.dataNascimento}">Data de Nascimento</span></h3>
         </div>
-
         <div class="total">
-            <h3 class="nomes">Cpf: <p class="cpf">${usuario.cpf}</p>
-            </h3>
+            <h3 class="nomes">Cpf: <span class="cpf" th:text="${usuario.cpf}">CPF</span></h3>
         </div>
-
     </div>
 
 </div>
@@ -109,13 +89,14 @@
 
     <!-- <h4 class="h4">Ainda não há endereços cadastrados</h4> -->
 
-    <div class="total enderecoCadastrado">
+    <div class="total enderecoCadastrado" th:if="${endereco.rua != null}">
         <table>
                 <tr>
                     <td>
-                        <h4 hidden class="end" id="id" name="id">${endereco.id}</h4>
-                        <text class="end">${endereco.rua}, ${endereco.bairro}, N° ${endereco.numero}.</text>
-                        <text class="end">CEP: ${endereco.cep} </text>
+                        <h4 hidden class="end" id="id" name="id" th:text="${endereco.id}"></h4>
+                        <text class="end" th:text="${endereco.rua + ', ' + endereco.bairro + ', N° ' + endereco.numero}"></text>
+                        <br>
+                        <text class="end" th:text="'CEP: ' + ${endereco.cep}"></text>
                         <div class="botoes">
 
                             <a

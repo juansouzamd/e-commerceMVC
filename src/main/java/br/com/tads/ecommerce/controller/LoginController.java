@@ -26,11 +26,13 @@ public class LoginController {
     @PostMapping("/login")
     public String loginUsuario(@RequestParam("email") String email,
                                @RequestParam("password") String senha,
-                               Model model) {
+                               Model model, HttpSession session) {
 
         Usuario usuario = usuarioRepository.findByEmail(email);
 
         if (usuario != null && usuario.getSenha().equals(senha)) {
+            session.setAttribute("usuario", usuario);
+            //usuario.setHabilitado(true);
             return "redirect:/";
         } else {
             model.addAttribute("error", "Credenciais inválidas. Por favor, tente novamente.");
@@ -39,8 +41,9 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String redirecionarLogout() {
-        return "login";
+    public String redirecionarLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }
 

@@ -21,7 +21,6 @@ public class CadastroController {
             return "login";
         }
         usuarioRepository.save(usuario);
-
         model.addAttribute("message", "Usuário cadastrado com sucesso!");
 
         return "redirect:/login";
