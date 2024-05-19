@@ -38,32 +38,31 @@
 </section>
 
 <div>
-    <form action="/" class="sign-in-form"  method="post">
+    <form th:action="@{'/atualizar-endereco/' + ${endereco.id}}" th:object="${endereco}" method="post" class="sign-in-form">
 
         <h2 class="title">Atualizar endereço</h2>
-        <input hidden type="text" name="id" id="id" value=""/>
-        <input hidden type="text" name="user-id" id="user-id" value="$"/>
+
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Rua" name="user-rua" id="user-rua" value=""/>
+            <input type="text" placeholder="Rua" th:field="*{rua}" />
         </div>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Número" name="user-numero" id="user-numero" value=""/>
+            <input type="number" placeholder="Número" th:field="*{numero}" />
         </div>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Bairro" name="user-bairro" id="user-bairro"  value=""/>
+            <input type="text" placeholder="Bairro" th:field="*{bairro}" />
         </div>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Cep" name="user-cep" id="user-cep"  value=""/>
+            <input type="text" placeholder="Cep" th:field="*{cep}" />
         </div>
 
-        <input type="submit" class="btn" value="Atualizar" />
+        <button type="submit" class="btn">Atualizar</button>
 
     </form>
 </div>

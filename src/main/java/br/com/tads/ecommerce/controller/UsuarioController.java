@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class UsuarioController {
 
@@ -29,23 +32,45 @@ public class UsuarioController {
         this.enderecoService = enderecoService;
     }
 
+//    @GetMapping("/usuario")
+//    public String mostrarPaginaUsuario(Model model, HttpSession session) {
+//        Usuario usuario = (Usuario) session.getAttribute("usuario");
+//        if (usuario != null) {
+//            Endereco endereco = enderecoService.getEnderecoByUserId(usuario.getId());
+//            model.addAttribute("usuario", usuario);
+//
+//            if(endereco == null){
+//                model.addAttribute("endereco", new Endereco());
+//            }else {
+//                model.addAttribute("endereco", endereco);
+//            }
+//            return "usuario";
+//        } else {
+//            return "redirect:/login";
+//        }
+//    }
+
     @GetMapping("/usuario")
     public String mostrarPaginaUsuario(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            Endereco endereco = enderecoService.getEnderecoByUserId(usuario.getId());
+            List<Endereco> enderecos = enderecoService.getEnderecosByUserId(usuario.getId());
             model.addAttribute("usuario", usuario);
+            model.addAttribute("endereco", new Endereco()); // Adicione esta linha para fornecer um objeto Endereco vazio
 
-            if(endereco == null){
-                model.addAttribute("endereco", new Endereco());
-            }else {
-                model.addAttribute("endereco", endereco);
+            if (enderecos.isEmpty()) {
+                model.addAttribute("enderecos", new ArrayList<Endereco>()); // Se a lista de endereços estiver vazia, adicione uma lista vazia ao modelo
+            } else {
+                model.addAttribute("enderecos", enderecos); // Caso contrário, adicione a lista de endereços normalmente
             }
+
             return "usuario";
         } else {
             return "redirect:/login";
         }
     }
+
+
 
     @PostMapping("/usuario/endereco")
     public String criarEndereco(Endereco endereco, HttpSession session) {

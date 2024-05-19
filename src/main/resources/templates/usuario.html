@@ -87,32 +87,29 @@
 
     <h3 class="h3">Endereços cadastrados:</h3>
 
-    <!-- <h4 class="h4">Ainda não há endereços cadastrados</h4> -->
-
-    <div class="total enderecoCadastrado" th:if="${endereco.rua != null}">
+    <div class="total enderecoCadastrado" th:each="endereco : ${enderecos}">
         <table>
-                <tr>
-                    <td>
-                        <h4 hidden class="end" id="id" name="id" th:text="${endereco.id}"></h4>
-                        <text class="end" th:text="${endereco.rua + ', ' + endereco.bairro + ', N° ' + endereco.numero}"></text>
-                        <br>
-                        <text class="end" th:text="'CEP: ' + ${endereco.cep}"></text>
-                        <div class="botoes">
-
-                            <a
-                                    href="endereco.jsp?id=${endereco.id}&rua=${endereco.rua}&numero=${endereco.numero}&bairro=${endereco.bairro}&cep=${endereco.cep}&userId=${usuario.id}"><input
-                                    type="submit" class="btn" value="Atualizar" /></a>
-
-
-                            <form action="/excluir-endereco?id=${endereco.id}&userId=${usuario.id}"
-                                  method="post">
-                                <input type="submit" class="btn bot" value="Excluir" />
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <h4 hidden class="end" id="id" name="id" th:text="${endereco.id}"></h4>
+                    <text class="end" th:text="${endereco.rua + ', ' + endereco.bairro + ', N° ' + endereco.numero}"></text>
+                    <br>
+                    <text class="end" th:text="'CEP: ' + ${endereco.cep}"></text>
+                    <div class="botoes">
+                        <a th:href="@{/atualizar-endereco/{id}(id=${endereco.id})}">
+                            <input type="submit" class="btn" value="Atualizar" />
+                        </a>
+                        <form action="/excluir-endereco?id=${endereco.id}&userId=${usuario.id}" method="post">
+                            <input type="submit" class="btn bot" value="Excluir" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
         </table>
+    </div>
 
+    <div th:if="${enderecos.isEmpty()}">
+        <h4 class="h4">Ainda não há endereços cadastrados</h4>
     </div>
 
 </div>

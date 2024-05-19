@@ -32,5 +32,8 @@ public class Usuario {
     private boolean habilitado;
 
     @OneToMany(mappedBy = "usuario")
+    private List<Endereco> enderecos;
+
+    @OneToMany(mappedBy = "usuario")
     private List<ItemCarrinho> itensCarrinho;
 }
