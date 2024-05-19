@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira, Thiago shigueto">
+    <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira, Thiago Shigueto">
     <title>Cureate</title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/carrinho.css">
 </head>
@@ -38,13 +37,12 @@
 </section>
 
 <section id="page-header" class="about-header">
-
-    <h2>#carrinho</h2>
-    <p>adicione seu cupon e tenha até 70% de desconto!</p>
+    <h2>#itemCarrinho</h2>
+    <p>Adicione seu cupom e tenha até 70% de desconto!</p>
 </section>
 
 <section id="cart" class="section-p1">
-    <table width="100%">
+    <table class="produtos__carrinho">
         <thead>
         <tr>
             <td>Remover</td>
@@ -57,18 +55,18 @@
         </thead>
 
         <tbody>
-                <tr class="tabelas">
-                    <form
-                            action="/delete-item-carrinho?produtoId=${item.idProduto}&subTotal=${item.subTotal}"
-                            method="post">
-                        <td><input type="submit" class="botaoExcluir" value="excluir"></td>
-                    </form>
-                    <td><img src="${item.imagem}" alt=""></td>
-                    <td>${item.produto}</td>
-                    <td>R$ ${item.preco} </td>
-                    <td>${item.quantidade}</td>
-                    <td class="subtotal">R$ ${item.subTotal} </td>
-                </tr>
+        <tr class="tabelas" th:each="item : ${carrinho.itensCarrinho}">
+            <form action="/carrinho/remove" method="post">
+                <input type="hidden" name="produtoId" th:value="${item.produto.id}"/>
+                <input type="hidden" name="subTotal" th:value="${item.totalPrice}"/>
+                <td><input type="submit" class="botaoExcluir" value="Excluir"></td>
+            </form>
+            <td><img th:src="${item.produto.imagemPrincipal}" alt="Imagem do produto"></td>
+            <td th:text="${item.produto.nome}"></td>
+            <td th:text="'R$ ' + ${item.preco}"></td>
+            <td th:text="${item.quantidade}"></td>
+            <td class="subtotal" th:text="'R$ ' + ${item.totalPrice}"></td>
+        </tr>
         </tbody>
     </table>
 </section>
@@ -76,33 +74,41 @@
 <section id="cart-add" class="section-p1">
     <div class="pagamento">
         <div id="subtotal">
-            <h3>Total carrinho</h3>
+            <h3>Total itemCarrinho</h3>
             <table>
                 <tr>
                     <td>Carrinho Subtotal</td>
-                    <td>R$ ${valorTotal}</td>
+                    <td>
+                        R$ <span th:text="${carrinho.itensCarrinho.isEmpty() ? '0.00' : totalPrice}"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Frete</td>
-                    <td>Grátis</td>
+                    <!-- Verifica se a lista de itens do itemCarrinho está vazia -->
+                    <td>
+                        <span th:text="${carrinho.itensCarrinho.isEmpty() ? 'R$ 0.00' : shippingCost}"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td><strong>R$ ${valorTotal}</strong></td>
+                    <!-- Verifica se a lista de itens do itemCarrinho está vazia -->
+                    <td>
+                        <strong>
+                            R$ <span th:text="${carrinho.itensCarrinho.isEmpty() ? '0.00' : total}"></span>
+                        </strong>
+                    </td>
                 </tr>
             </table>
-            <a href="/pagamento" class="normal comp">Comprar</a>
+            <a href="/checkout" class="normal comp">Comprar</a>
         </div>
 
     </div>
-    <span>${message}</span>
-
 </section>
 
 <section id="newsletter" class="section-p1 section-m1">
     <div class="newstext">
         <h4>Seja o primeiro a saber</h4>
-        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span> </p>
+        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span></p>
     </div>
     <div class="form">
         <input type="text" placeholder="Digite seu e-mail">
@@ -140,7 +146,7 @@
     <div class="col">
         <h4>Minha conta</h4>
         <a href="#">Entrar</a>
-        <a href="#">Ver carrinho</a>
+        <a href="#">Ver itemCarrinho</a>
         <a href="#">Meus favoritos</a>
         <a href="#">Meus pedidos</a>
         <a href="#">Ajuda</a>

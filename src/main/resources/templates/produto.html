@@ -62,7 +62,7 @@
         <h6>Produto:</h6>
         <h4 th:text="${produto.nome}">Nome</h4>
         <h2 th:text="${produto.preco}">Preço</h2>
-        <select>
+        <select required>
             <option>Selecione o tamanho</option>
             <th:block th:if="${id >= 8}">
                 <option>PP</option>
@@ -82,8 +82,11 @@
                 <option>44</option>
             </th:block>
         </select>
-        <input type="number" value="1"  min="1">
-        <button class="normal">Adicionar ao carrinho</button>
+        <form action="/carrinho/add" method="post">
+            <input type="hidden" name="produtoId" th:value="${produto.id}" />
+            <input type="number" name="quantidade" value="1" min="1">
+            <button type="submit" class="normal">Adicionar ao itemCarrinho</button>
+        </form>
         <h4>Detalhes do produto:</h4>
         <span th:text="${produto.descricao}">
                 descricao
@@ -158,7 +161,7 @@
     <div class="col">
         <h4>Minha conta</h4>
         <a href="#">Entrar</a>
-        <a href="#">Ver carrinho</a>
+        <a href="#">Ver itemCarrinho</a>
         <a href="#">Meus favoritos</a>
         <a href="#">Meus pedidos</a>
         <a href="#">Ajuda</a>

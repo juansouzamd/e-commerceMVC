@@ -1,5 +1,6 @@
 package br.com.tads.ecommerce.model;
 
+import br.com.tads.ecommerce.strategy.ShippingContext;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,4 +22,9 @@ public class ItemCarrinho {
     private int quantidade;
 
     private double preco;
+
+    public double getTotalPrice() {
+        return quantidade * preco;
+    }
+
 }

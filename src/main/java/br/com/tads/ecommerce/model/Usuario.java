@@ -34,6 +34,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<ItemCarrinho> itensCarrinho;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemCarrinho> itensItemCarrinho;
 }
