@@ -33,4 +33,7 @@ public class EnderecoService {
     }
 
 
+    public void deleteEnderecoById(Long id) {
+        enderecoRepository.deleteById(id);
+    }
 }
