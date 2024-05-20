@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira, Thiago shigueto">
+    <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira,  Thiago shigueto">
     <title>Cureate</title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -38,33 +38,63 @@
     </div>
 </section>
 
-<section id="hero">
-</section>
+<section id="prodetails" class="section-p1">
+    <div class="single-pro-image">
+        <img id="MainImg" th:src="@{${images[1].path}}" width="100%" class="small-img" alt="">
 
-<section id="feature" class="section-p1">
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f1.png" alt="">
-        <h6>Frete grátis</h6>
+        <div class="small-img-group">
+            <div class="small-img-col">
+                <img th:src="@{${images[1].path}}"
+                     width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img th:src="@{${images[2].path}}"
+                     width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img th:src="@{${images[3].path}}"
+                     width="100%" class="small-img" alt="">
+            </div>
+            <div class="small-img-col">
+                <img th:src="@{${images[4].path}}"
+                     width="100%" class="small-img" alt="">
+            </div>
+        </div>
     </div>
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f2.png" alt="">
-        <h6>Entrega rápida</h6>
-    </div>
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f3.png" alt="">
-        <h6>Economize dinheiro</h6>
-    </div>
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f4.png" alt="">
-        <h6>Promoções</h6>
-    </div>
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f5.png" alt="">
-        <h6>Pós-venda</h6>
-    </div>
-    <div class="fe-box">
-        <img src="/img/front-end/caracteristicas/f6.png" alt="">
-        <h6>Suporte 24/7</h6>
+
+    <div class="single-pro-details">
+        <h6>Produto:</h6>
+        <h4 th:text="${product.name}">Nome</h4>
+        <h2 th:text="${product.price}">Preço</h2>
+        <form action="/carrinho/add" id="myForm" method="post">
+            <select id="sizeSelect" name="size" required>
+                <option disabled selected>Selecione o tamanho</option>
+            <th:block th:if="${id >= 8}">
+                <option>PP</option>
+                <option>P</option>
+                <option>M</option>
+                <option>G</option>
+                <option>GG</option>
+                <option>XG</option>
+            </th:block>
+            <th:block th:unless="${id >= 8}">
+                <option>38</option>
+                <option>39</option>
+                <option>40</option>
+                <option>41</option>
+                <option>42</option>
+                <option>43</option>
+                <option>44</option>
+            </th:block>
+        </select>
+            <input type="hidden" name="produtoId" th:value="${product.id}" />
+            <input type="number" name="quantidade" value="1" min="1">
+            <button type="submit" onclick="validateForm(event)" class="normal">Adicionar ao itemCarrinho</button>
+        </form>
+        <h4>Detalhes do produto:</h4>
+        <span th:text="${product.description}">
+                descricao
+            </span>
     </div>
 </section>
 
@@ -72,12 +102,13 @@
     <h2>Produtos em destaque</h2>
     <p>Desenvolvidos para seu maior conforto</p>
     <div class="pro-container">
-        <div th:each="x : ${firstHalfProducts}" class="pro">
-            <a th:href="@{'/product/' + ${x.id}}" class="decoration">
-                <img th:src="@{${x.main_image}}" alt="" />
+        <div th:each="x : ${randomProducts}" class="pro">
+            <a th:href="@{'/product/' + ${x.id}}"  class="decoration">
+                <img th:src="@{${x.main_image}}"
+                     alt="">
                 <div class="des">
-                    <span th:text="${x.brand}">Marca</span>
-                    <h5 th:text="${x.name}">Nome</h5>
+                    <span th:text="${x.brand}" >Marca</span>
+                    <h5 th:text="${x.name}" >Nome</h5>
                     <div class="star">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -88,69 +119,15 @@
                     <h4 th:text="'R$' + ${x.price}">Preço</h4>
                 </div>
             </a>
+            <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
         </div>
-
-    </div>
-</section>
-
-<section id="banner" class="section-m1">
-    <h2>Agora <span>50% de desconto</span> - todos os tênis & camisetas</h2>
-    <button class="normal">Explorar mais</button>
-</section>
-
-<section id="product1" class="section-p1">
-    <h2>Lançamentos</h2>
-    <p>Coleções desenvolvidas seguindo atletas campeões</p>
-    <div class="pro-container">
-        <div th:each="x : ${secondHalfProducts}" class="pro">
-            <a th:href="@{'/product/' + ${x.id}}" class="decoration">
-                <img th:src="@{${x.main_image}}" alt="" />
-                <div class="des">
-                    <span th:text="${x.brand}">Marca</span>
-                    <h5 th:text="${x.name}">Nome</h5>
-                    <div class="star">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h4 th:text="'R$' + ${x.price}">Preço</h4>
-                </div>
-            </a>
-        </div>
-    </div>
-
-</section>
-
-<section id="sm-banner" class="section-p1">
-    <div class="banner-box">
-        <h4>Basquete</h4>
-        <h2>Camisetas únicas</h2>
-        <span>Linha dri-fit</span>
-        <button class="white">Sinta a emoção</button>
-    </div>
-    <div class="banner-box banner-box2">
-        <h4>Sneakers</h4>
-        <h2>Criado para ser diferente</h2>
-        <span>Fique por dentro dos lançamentos!</span>
-        <button class="white">Coleção</button>
-    </div>
-</section>
-
-<section id="banner3">
-    <div class="banner-box">
-    </div>
-    <div class="banner-box banner-box2">
-    </div>
-    <div class="banner-box banner-box3">
     </div>
 </section>
 
 <section id="newsletter" class="section-p1 section-m1">
     <div class="newstext">
         <h4>Seja o primeiro a saber</h4>
-        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span> </p>
+        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span></p>
     </div>
     <div class="form">
         <input type="text" placeholder="Digite seu e-mail">
@@ -210,7 +187,7 @@
     </div>
 </footer>
 
-
+<script src="/js/product.js"></script>
 <script src="/js/script.js"></script>
 </body>
 

@@ -1,7 +1,7 @@
 package br.com.tads.ecommerce.controller;
 
-import br.com.tads.ecommerce.model.Usuario;
-import br.com.tads.ecommerce.repository.UsuarioRepository;
+import br.com.tads.ecommerce.model.Users;
+import br.com.tads.ecommerce.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository usuarioRepository;
     @GetMapping("/login")
-    public String mostrarPaginaLogin(Model model, @RequestParam(name = "error", required = false) String error) {
+    public String showLoginPage(Model model, @RequestParam(name = "error", required = false) String error) {
         if (error != null) {
             model.addAttribute("errorMessage", "Usuário ou senha incorretos.");
         }
@@ -24,14 +24,14 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginUsuario(@RequestParam("email") String email,
+    public String loginUser(@RequestParam("email") String email,
                                @RequestParam("password") String senha,
                                Model model, HttpSession session) {
 
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Users user = usuarioRepository.findByEmail(email);
 
-        if (usuario != null && usuario.getSenha().equals(senha)) {
-            session.setAttribute("usuario", usuario);
+        if (user != null && user.getPassword().equals(senha)) {
+            session.setAttribute("usuario", user);
             //usuario.setHabilitado(true);
             return "redirect:/";
         } else {
@@ -41,7 +41,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String redirecionarLogout(HttpSession session) {
+    public String redirectLogout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
     }
