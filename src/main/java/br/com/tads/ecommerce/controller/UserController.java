@@ -23,36 +23,19 @@ public class UserController {
         this.addressService = addressService;
     }
 
-//    @GetMapping("/usuario")
-//    public String mostrarPaginaUsuario(Model model, HttpSession session) {
-//        Usuario usuario = (Usuario) session.getAttribute("usuario");
-//        if (usuario != null) {
-//            Endereco endereco = enderecoService.getEnderecoByUserId(usuario.getId());
-//            model.addAttribute("usuario", usuario);
-//
-//            if(endereco == null){
-//                model.addAttribute("endereco", new Endereco());
-//            }else {
-//                model.addAttribute("endereco", endereco);
-//            }
-//            return "usuario";
-//        } else {
-//            return "redirect:/login";
-//        }
-//    }
-
     @GetMapping("/user")
-    public String mostrarPaginaUsuario(Model model, HttpSession session) {
+    public String showPageUser(Model model, HttpSession session) {
         Users user = (Users) session.getAttribute("usuario");
         if (user != null) {
-            List<Address> enderecos = addressService.getAddressesByUserId(user.getId());
-            model.addAttribute("usuario", user);
-            model.addAttribute("endereco", new Address()); // Adicione esta linha para fornecer um objeto Endereco vazio
+            List<Address> Adresses = addressService.getAddressesByUserId(user.getId());
+            model.addAttribute("user", user);
+            model.addAttribute("address", new Address()); // Adicione esta linha para fornecer um objeto Endereco vazio
 
-            if (enderecos.isEmpty()) {
-                model.addAttribute("enderecos", new ArrayList<Address>()); // Se a lista de endereços estiver vazia, adicione uma lista vazia ao modelo
+            if (Adresses.isEmpty()) {
+                model.addAttribute("adresses", new ArrayList<Address>()); // Se a lista de endereços estiver vazia,
+                // adicione uma lista vazia ao modelo
             } else {
-                model.addAttribute("enderecos", enderecos); // Caso contrário, adicione a lista de endereços normalmente
+                model.addAttribute("adresses", Adresses); // Caso contrário, adicione a lista de endereços normalmente
             }
 
             return "user";
@@ -61,12 +44,10 @@ public class UserController {
         }
     }
 
-
-
-    @PostMapping("/usuario/endereco") // nao é usado
+    @PostMapping("/user/address")
     public String criarEndereco(Address endereco, HttpSession session) {
-        Users usuario = (Users) session.getAttribute("usuario");
-        endereco.setUser(usuario);
+        Users user = (Users) session.getAttribute("usuario");
+        endereco.setUser(user);
         addressService.createAddress(endereco);
         return "redirect:/user";
     }

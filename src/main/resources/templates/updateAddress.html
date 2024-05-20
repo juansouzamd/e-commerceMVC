@@ -40,23 +40,23 @@
 </section>
 
 <div>
-    <form th:action="@{'/atualizar-endereco/' + ${endereco.id}}" th:object="${endereco}" method="post" class="sign-in-form">
+    <form th:action="@{'/update-address/' + ${address.id}}" th:object="${address}" method="post" class="sign-in-form">
 
         <h2 class="title">Atualizar endereço</h2>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Rua" th:field="*{rua}" />
+            <input type="text" placeholder="Rua" th:field="*{street}" />
         </div>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="number" placeholder="Número" th:field="*{numero}" />
+            <input type="number" placeholder="Número" th:field="*{number}" />
         </div>
 
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Bairro" th:field="*{bairro}" />
+            <input type="text" placeholder="Bairro" th:field="*{neighborhood}" />
         </div>
 
         <div class="input-field">

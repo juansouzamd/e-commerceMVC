@@ -40,44 +40,45 @@
 </section>
 
 <div class="usuario">
-    <form action="/user/endereco" class="sign-in-form" method="post" th:object="${endereco}">
+    <form action="/user/address" class="sign-in-form" method="post" th:object="${address}">
         <h2 class="title">Cadastrar endereço</h2>
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Rua" name="rua" id="user-rua" th:field="*{rua}" required/>
+            <input type="text" placeholder="Rua" name="rua" id="user-rua" th:field="*{street}" required/>
         </div>
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="number" placeholder="Número" name="numero" id="user-numero" th:field="*{numero}" required/>
+            <input type="number" placeholder="Número" name="numero" id="user-numero" th:field="*{number}" required/>
         </div>
         <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Bairro" name="bairro" id="user-bairro" th:field="*{bairro}" required/>
+            <input type="text" placeholder="Bairro" name="bairro" id="user-bairro" th:field="*{neighborhood}" required/>
         </div>
         <div class="input-field">
             <i class="fas fa-user"></i>
             <input type="text" placeholder="Cep" name="cep" id="user-cep" th:field="*{cep}" required/>
         </div>
-        <input type="hidden" name="usuario.id" id="user-id" th:value="${usuario.id}"/>
+        <input type="hidden" name="usuario.id" id="user-id" th:value="${user.id}"/>
         <input type="submit" class="btn" value="Cadastrar" />
     </form>
 
 
     <div class="dadosTotal">
         <div class="total">
-            <h3 class="nomes h3nome">Nome: <span class="nome" th:text="${usuario.nome}">Nome</span></h3>
+            <h3 class="nomes h3nome">Nome: <span class="nome" th:text="${user.name}">Nome</span></h3>
         </div>
         <div class="total">
-            <h3 class="nomes">E-mail: <span class="email" th:text="${usuario.email}">Email</span></h3>
+            <h3 class="nomes">E-mail: <span class="email" th:text="${user.email}">Email</span></h3>
         </div>
         <div class="total">
-            <h3 class="nomes">Telefone: <span class="telefone" th:text="${usuario.telefone}">Telefone</span></h3>
+            <h3 class="nomes">Telefone: <span class="telefone" th:text="${user.phone}">Telefone</span></h3>
         </div>
         <div class="total">
-            <h3 class="nomes">Data de nascimento: <span class="dataNasc" th:text="${usuario.dataNascimento}">Data de Nascimento</span></h3>
+            <h3 class="nomes">Data de nascimento: <span class="dataNasc" th:text="${user.birthDate}">Data de
+                Nascimento</span></h3>
         </div>
         <div class="total">
-            <h3 class="nomes">Cpf: <span class="cpf" th:text="${usuario.cpf}">CPF</span></h3>
+            <h3 class="nomes">Cpf: <span class="cpf" th:text="${user.cpf}">CPF</span></h3>
         </div>
     </div>
 
@@ -89,19 +90,22 @@
 
     <h3 class="h3">Endereços cadastrados:</h3>
 
-    <div class="total enderecoCadastrado" th:each="endereco : ${enderecos}">
+    <div class="total enderecoCadastrado" th:each="address : ${adresses}">
         <table>
             <tr>
                 <td>
-                    <h4 hidden class="end" id="id" name="id" th:text="${endereco.id}"></h4>
-                    <text class="end" th:text="${endereco.rua + ', ' + endereco.bairro + ', N° ' + endereco.numero}"></text>
+                    <h4 hidden class="end" id="id" name="id" th:text="${address.id}"></h4>
+                    <text class="end"
+                          th:text="${address.street + ', ' + address.neighborhood + ', N° ' + address.number}"></text>
                     <br>
-                    <text class="end" th:text="'CEP: ' + ${endereco.cep}"></text>
+                    <text class="end" th:text="'CEP: ' + ${address.cep}"></text>
                     <div class="botoes">
-                        <a th:href="@{/atualizar-endereco/{id}(id=${endereco.id})}">
+                        <a th:href="@{/update-address/{id}(id=${address.id})}">
                             <input type="submit" class="btn" value="Atualizar" />
                         </a>
-                        <form th:action="@{/excluir-endereco(id=${endereco.id}, userId=${usuario.id})}" method="post">
+                        <form th:action="@{/delete-address}" method="post">
+                            <input type="hidden" name="id" th:value="${address.id}" />
+                            <input type="hidden" name="userId" th:value="${user.id}" />
                             <input type="submit" class="btn bot" value="Excluir" />
                         </form>
                     </div>
@@ -110,7 +114,7 @@
         </table>
     </div>
 
-    <div th:if="${enderecos.isEmpty()}">
+    <div th:if="${adresses.isEmpty()}">
         <h4 class="h4">Ainda não há endereços cadastrados</h4>
     </div>
 

@@ -21,44 +21,41 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping("/atualizar-endereco/{id}")
-    public String mostrarPaginaEndereco(Model model, @PathVariable Long id){
-        Address endereco = addressService.getAddressById(id);
-        model.addAttribute("endereco", endereco);
-        return "endereco";
+    @GetMapping("/update-address/{id}")
+    public String showPageAddress(Model model, @PathVariable Long id){
+        Address address = addressService.getAddressById(id);
+        model.addAttribute("address", address);
+        return "updateAddress";
     }
 
-    @PostMapping("/atualizar-endereco/{id}")
-    public String atualizarEndereco(@ModelAttribute("enderecoAtualizado") Address enderecoAtualizado,
+    @PostMapping("/update-address/{id}")
+    public String updateAddress(@ModelAttribute("updateAddress") Address updateAddress,
                                     HttpServletRequest request, @PathVariable Long id) {
 
-        Users usuario = (Users) request.getSession().getAttribute("usuario");
-        Address endereco = addressService.getAddressById(id);
+        Users user = (Users) request.getSession().getAttribute("usuario");
+        Address address = addressService.getAddressById(id);
 
+            address.setStreet(updateAddress.getStreet());
+            address.setCep(updateAddress.getCep());
+            address.setNeighborhood(updateAddress.getNeighborhood());
+            address.setNumber(updateAddress.getNumber());
 
-            // Atualizar os campos do endereço existente com os dados do endereço atualizado
-            endereco.setStreet(enderecoAtualizado.getStreet());
-            endereco.setCep(enderecoAtualizado.getCep());
-            endereco.setNeighborhood(enderecoAtualizado.getNeighborhood());
-            endereco.setNumber(enderecoAtualizado.getNumber());
+            addressService.createAddress(address);
 
-            addressService.createAddress(endereco);
-
-
-        return "redirect:/usuario";
+        return "redirect:/user";
     }
 
 
 
-    @PostMapping("/excluir-endereco")
-    public String excluirEndereco(@RequestParam Long id, @RequestParam Long userId, HttpSession session) {
+    @PostMapping("/delete-address")
+    public String deleteAddress(@RequestParam("id") Long id, @RequestParam("userId") Long userId, HttpSession session) {
         addressService.deleteAddressById(id);
-        // Atualize a lista de endereços do usuário na sessão após a exclusão
-        Users usuario = (Users) session.getAttribute("usuario");
-        if (usuario != null && usuario.getId().equals(userId)) {
-            List<Address> enderecos = addressService.getAddressesByUserId(userId);
-            session.setAttribute("enderecos", enderecos);
+
+        Users user = (Users) session.getAttribute("usuario");
+        if (user != null && user.getId().equals(userId)) {
+            List<Address> addresses = addressService.getAddressesByUserId(userId);
+            session.setAttribute("addresses", addresses);
         }
-        return "redirect:/usuario";
+        return "redirect:/user";
     }
 }
