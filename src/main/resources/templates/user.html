@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Juan Souza, Maria Helena, Pedro Ferreira, Thiago shigueto">
     <title>Cureate</title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/user.css">
@@ -59,7 +59,7 @@
             <input type="text" placeholder="Cep" name="cep" id="user-cep" th:field="*{cep}" required/>
         </div>
         <input type="hidden" name="usuario.id" id="user-id" th:value="${user.id}"/>
-        <input type="submit" class="btn" value="Cadastrar" />
+        <input type="submit" class="btn" value="Cadastrar"/>
     </form>
 
 
@@ -101,12 +101,12 @@
                     <text class="end" th:text="'CEP: ' + ${address.cep}"></text>
                     <div class="botoes">
                         <a th:href="@{/address/update/{id}(id=${address.id})}">
-                            <input type="submit" class="btn" value="Atualizar" />
+                            <input type="submit" class="btn" value="Atualizar"/>
                         </a>
                         <form th:action="@{/address/delete}" method="post">
-                            <input type="hidden" name="id" th:value="${address.id}" />
-                            <input type="hidden" name="userId" th:value="${user.id}" />
-                            <input type="submit" class="btn bot" value="Excluir" />
+                            <input type="hidden" name="id" th:value="${address.id}"/>
+                            <input type="hidden" name="userId" th:value="${user.id}"/>
+                            <input type="submit" class="btn bot" value="Excluir"/>
                         </form>
                     </div>
                 </td>
@@ -127,27 +127,26 @@
 
     <h3 class="h3">Pedidos cadastrados:</h3>
     <section id="cart" class="section-p1">
-        <table width="100%">
+        <table class="lista__pedidos">
             <thead>
-            <tr>
-                <td>Imagem</td>
-                <td>Produto</td>
-                <td>Preço</td>
-                <td>Quantidade</td>
-                <td>Subtotal</td>
-                <td>Endereco de entrega</td>
-            </tr>
+                <tr>
+                    <th>Imagem</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                    <th>Endereço de entrega</th>
+                </tr>
             </thead>
-
             <tbody>
-                    <tr>
-                        <td><img src="${item.imagem}" alt=""></td>
-                        <td>${item.produto}</td>
-                        <td>R$ ${item.preco} </td>
-                        <td>${item.quantidade}</td>
-                        <td>R$ ${item.subTotal} </td>
-                        <td>${item.endereco} </td>
-                    </tr>
+                <tr th:each="order : ${orders}">
+                    <td><img th:src="${order.image}" alt="Imagem do produto"></td>
+                    <td th:text="${order.name}"></td>
+                    <td th:text="'R$ ' + ${order.price}"></td>
+                    <td th:text="${order.quantity}"></td>
+                    <td th:text="'R$ ' + ${order.valueTotal}"></td>
+                    <td th:text="${order.address}"></td>
+                </tr>
             </tbody>
         </table>
     </section>
@@ -157,7 +156,7 @@
 <section id="newsletter" class="section-p1 section-m1">
     <div class="newstext">
         <h4>Seja o primeiro a saber</h4>
-        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span> </p>
+        <p>Receba as novidades da nossa loja e saiba antes dos <span>futuros lançamentos!</span></p>
     </div>
     <div class="form">
         <input type="text" placeholder="Digite seu e-mail">

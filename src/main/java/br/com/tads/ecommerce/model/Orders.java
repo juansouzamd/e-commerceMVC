@@ -28,10 +28,5 @@ public class Orders {
 
 
     private String address;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
 }
 

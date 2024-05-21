@@ -1,8 +1,10 @@
 package br.com.tads.ecommerce.controller;
 
 import br.com.tads.ecommerce.model.Address;
+import br.com.tads.ecommerce.model.Orders;
 import br.com.tads.ecommerce.model.Users;
 import br.com.tads.ecommerce.service.AddressService;
+import br.com.tads.ecommerce.service.OrdersService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class UserController {
     private AddressService addressService;
 
     @Autowired
+    private OrdersService ordersService;
+
+    @Autowired
     public UserController(AddressService addressService) {
         this.addressService = addressService;
     }
@@ -29,21 +34,16 @@ public class UserController {
     public String showPageUser(Model model, HttpSession session) {
         Users user = (Users) session.getAttribute("usuario");
         if (user != null) {
-            List<Address> Adresses = addressService.getAddressesByUserId(user.getId());
+            List<Address> adresses = addressService.getAddressesByUserId(user.getId());
+            List<Orders> orders = ordersService.getOrdersByUserId(user.getId());
             model.addAttribute("user", user);
-            model.addAttribute("address", new Address()); // Adicione esta linha para fornecer um objeto Endereco vazio
+            model.addAttribute("address", new Address());
 
-            if (Adresses.isEmpty()) {
-                model.addAttribute("adresses", new ArrayList<Address>()); // Se a lista de endereços estiver vazia,
-                // adicione uma lista vazia ao modelo
-            } else {
-                model.addAttribute("adresses", Adresses); // Caso contrário, adicione a lista de endereços normalmente
+            model.addAttribute("adresses", adresses.isEmpty() ? new ArrayList<>() : adresses);
+            model.addAttribute("orders", orders.isEmpty() ? new ArrayList<>() : orders);
             }
 
             return "user";
-        } else {
-            return "redirect:/login";
-        }
     }
 
     @PostMapping("/address")
