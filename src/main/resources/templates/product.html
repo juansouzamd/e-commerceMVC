@@ -66,7 +66,7 @@
         <h6>Produto:</h6>
         <h4 th:text="${product.name}">Nome</h4>
         <h2 th:text="${product.price}">Preço</h2>
-        <form action="/carrinho/add" id="myForm" method="post">
+        <form action="/shoppingCart/add" id="myForm" method="post">
             <select id="sizeSelect" name="size" required>
                 <option disabled selected>Selecione o tamanho</option>
             <th:block th:if="${id >= 8}">

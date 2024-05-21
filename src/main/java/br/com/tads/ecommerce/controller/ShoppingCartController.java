@@ -25,18 +25,18 @@ public class ShoppingCartController {
     private CartItemRepository itemCarrinhoRepository;
 
     @GetMapping
-    public String viewCarrinho(HttpSession session, Model model) {
-        ShoppingCart itemCarrinho = (ShoppingCart) session.getAttribute("carrinho");
-        if (itemCarrinho == null) {
-            itemCarrinho = new ShoppingCart();
-            session.setAttribute("carrinho", itemCarrinho);
+    public String viewCart(HttpSession session, Model model) {
+        ShoppingCart cartItem = (ShoppingCart) session.getAttribute("carrinho");
+        if (cartItem == null) {
+            cartItem = new ShoppingCart();
+            session.setAttribute("carrinho", cartItem);
         }
 
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
         DecimalFormat df = new DecimalFormat("#.00", symbols);
-        String totalPriceFormatted = df.format(itemCarrinho.getTotalPrice());
-        String shippingCostFormatted = df.format(itemCarrinho.calculateShipping());
+        String totalPriceFormatted = df.format(cartItem.getTotalPrice());
+        String shippingCostFormatted = df.format(cartItem.calculateShipping());
 
         // Convertendo as strings formatadas em números
         double totalPrice = Double.parseDouble(totalPriceFormatted);
@@ -54,40 +54,40 @@ public class ShoppingCartController {
             shippingCostFormatted = "R$ " + shippingCostFormatted;
         }
 
-        model.addAttribute("carrinho", itemCarrinho);
+        model.addAttribute("shoppingCart", cartItem);
         model.addAttribute("totalPrice", totalPriceFormatted);
         model.addAttribute("shippingCost", shippingCostFormatted);
         model.addAttribute("total", totalValue);
 
-        return "carrinho";
+        return "shoppingCart";
     }
 
     @PostMapping("/add")
-    public String addItemToCarrinho(@RequestParam int produtoId, @RequestParam int quantidade, HttpSession session) {
-        ShoppingCart itemCarrinho = (ShoppingCart) session.getAttribute("carrinho");
-        if (itemCarrinho == null) {
-            itemCarrinho = new ShoppingCart();
-            session.setAttribute("carrinho", itemCarrinho);
+    public String addItemToCart(@RequestParam int produtoId, @RequestParam int quantidade, HttpSession session) {
+        ShoppingCart cartItem = (ShoppingCart) session.getAttribute("carrinho");
+        if (cartItem == null) {
+            cartItem = new ShoppingCart();
+            session.setAttribute("carrinho", cartItem);
         }
 
-        Product produto = produtoService.getProductById(produtoId);
+        Product product = produtoService.getProductById(produtoId);
         CartItem item = new CartItem();
-        item.setProduct(produto);
+        item.setProduct(product);
         item.setQuantity(quantidade);
-        item.setPrice(produto.getPrice());
-        itemCarrinho.addItem(item);
+        item.setPrice(product.getPrice());
+        cartItem.addItem(item);
 
         itemCarrinhoRepository.save(item);
 
-        return "redirect:/carrinho";
+        return "redirect:/shoppingCart";
     }
 
     @PostMapping("/remove")
-    public String removeItemFromCarrinho(@RequestParam Long produtoId, HttpSession session) {
-        ShoppingCart itemCarrinho = (ShoppingCart) session.getAttribute("carrinho");
-        if (itemCarrinho != null) {
-            itemCarrinho.getCartItems().removeIf(item -> item.getProduct().getId().equals(produtoId));
+    public String removeItemFromCart(@RequestParam Long produtoId, HttpSession session) {
+        ShoppingCart cartItem = (ShoppingCart) session.getAttribute("carrinho");
+        if (cartItem != null) {
+            cartItem.getCartItems().removeIf(item -> item.getProduct().getId().equals(produtoId));
         }
-        return "redirect:/carrinho";
+        return "redirect:/shoppingCart";
     }
 }

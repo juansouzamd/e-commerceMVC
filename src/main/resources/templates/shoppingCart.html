@@ -57,16 +57,16 @@
         </thead>
 
         <tbody>
-        <tr class="tabelas" th:each="item : ${carrinho.itensCarrinho}">
-            <form action="/carrinho/remove" method="post">
-                <input type="hidden" name="produtoId" th:value="${item.produto.id}"/>
+        <tr class="tabelas" th:each="item : ${shoppingCart.cartItems}">
+            <form action="/shoppingCart/remove" method="post">
+                <input type="hidden" name="produtoId" th:value="${item.product.id}"/>
                 <input type="hidden" name="subTotal" th:value="${item.totalPrice}"/>
                 <td><input type="submit" class="botaoExcluir" value="Excluir"></td>
             </form>
-            <td><img th:src="${item.produto.imagemPrincipal}" alt="Imagem do produto"></td>
-            <td th:text="${item.produto.nome}"></td>
-            <td th:text="'R$ ' + ${item.preco}"></td>
-            <td th:text="${item.quantidade}"></td>
+            <td><img th:src="${item.product.main_image}" alt="Imagem do produto"></td>
+            <td th:text="${item.product.name}"></td>
+            <td th:text="'R$ ' + ${item.price}"></td>
+            <td th:text="${item.quantity}"></td>
             <td class="subtotal" th:text="'R$ ' + ${item.totalPrice}"></td>
         </tr>
         </tbody>
@@ -81,14 +81,14 @@
                 <tr>
                     <td>Carrinho Subtotal</td>
                     <td>
-                        R$ <span th:text="${carrinho.itensCarrinho.isEmpty() ? '0.00' : totalPrice}"></span>
+                        R$ <span th:text="${shoppingCart.cartItems.isEmpty() ? '0.00' : totalPrice}"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Frete</td>
                     <!-- Verifica se a lista de itens do itemCarrinho está vazia -->
                     <td>
-                        <span th:text="${carrinho.itensCarrinho.isEmpty() ? 'R$ 0.00' : shippingCost}"></span>
+                        <span th:text="${shoppingCart.cartItems.isEmpty() ? 'R$ 0.00' : shippingCost}"></span>
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +96,7 @@
                     <!-- Verifica se a lista de itens do itemCarrinho está vazia -->
                     <td>
                         <strong>
-                            R$ <span th:text="${carrinho.itensCarrinho.isEmpty() ? '0.00' : total}"></span>
+                            R$ <span th:text="${shoppingCart.cartItems.isEmpty() ? '0.00' : total}"></span>
                         </strong>
                     </td>
                 </tr>
