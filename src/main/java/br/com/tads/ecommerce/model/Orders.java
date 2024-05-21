@@ -12,8 +12,7 @@ public class Orders {
 
     private String image;
 
-    @Column(nullable = false, length = 255)
-    private String product;
+    private String name;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -21,16 +20,18 @@ public class Orders {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
-    private Double total;
-
-    private String deliveryEstimate;//#tirar
+    private Double valueTotal;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
 
-    @Column(columnDefinition = "TEXT")
-    private String address; //#tirar
+
+    private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }
 

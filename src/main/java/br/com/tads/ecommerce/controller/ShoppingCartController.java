@@ -25,11 +25,11 @@ public class ShoppingCartController {
 
     @Autowired
     private CartItemRepository itemCarrinhoRepository;
+    @Autowired
+    private AddressService addressService;
 
     private UserRepository userRepository;
 
-    @Autowired
-    private AddressService addressService;
 
     @GetMapping
     public String viewCart(HttpSession session, Model model) {
