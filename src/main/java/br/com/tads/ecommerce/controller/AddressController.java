@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/address")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -21,14 +22,14 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping("/update-address/{id}")
+    @GetMapping("/update/{id}")
     public String showPageAddress(Model model, @PathVariable Long id){
         Address address = addressService.getAddressById(id);
         model.addAttribute("address", address);
         return "updateAddress";
     }
 
-    @PostMapping("/update-address/{id}")
+    @PostMapping("/update/{id}")
     public String updateAddress(@ModelAttribute("updateAddress") Address updateAddress,
                                     HttpServletRequest request, @PathVariable Long id) {
 
@@ -47,7 +48,7 @@ public class AddressController {
 
 
 
-    @PostMapping("/delete-address")
+    @PostMapping("/delete")
     public String deleteAddress(@RequestParam("id") Long id, @RequestParam("userId") Long userId, HttpSession session) {
         addressService.deleteAddressById(id);
 

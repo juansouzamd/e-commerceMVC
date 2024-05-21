@@ -25,12 +25,12 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginUser(@RequestParam("email") String email,
-                               @RequestParam("password") String senha,
+                               @RequestParam("password") String password,
                                Model model, HttpSession session) {
 
         Users user = usuarioRepository.findByEmail(email);
 
-        if (user != null && user.getPassword().equals(senha)) {
+        if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("usuario", user);
             //usuario.setHabilitado(true);
             return "redirect:/";

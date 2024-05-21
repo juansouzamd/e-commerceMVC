@@ -100,10 +100,10 @@
                     <br>
                     <text class="end" th:text="'CEP: ' + ${address.cep}"></text>
                     <div class="botoes">
-                        <a th:href="@{/update-address/{id}(id=${address.id})}">
+                        <a th:href="@{/address/update/{id}(id=${address.id})}">
                             <input type="submit" class="btn" value="Atualizar" />
                         </a>
-                        <form th:action="@{/delete-address}" method="post">
+                        <form th:action="@{/address/delete}" method="post">
                             <input type="hidden" name="id" th:value="${address.id}" />
                             <input type="hidden" name="userId" th:value="${user.id}" />
                             <input type="submit" class="btn bot" value="Excluir" />

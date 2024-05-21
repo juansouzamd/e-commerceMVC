@@ -1,11 +1,12 @@
 package br.com.tads.ecommerce.controller;
 
-import br.com.tads.ecommerce.model.ShoppingCart;
-import br.com.tads.ecommerce.model.CartItem;
-import br.com.tads.ecommerce.model.Product;
+import br.com.tads.ecommerce.model.*;
 import br.com.tads.ecommerce.repository.CartItemRepository;
+import br.com.tads.ecommerce.repository.UserRepository;
+import br.com.tads.ecommerce.service.AddressService;
 import br.com.tads.ecommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 
 @Controller
 @RequestMapping("/shoppingCart")
@@ -24,13 +26,22 @@ public class ShoppingCartController {
     @Autowired
     private CartItemRepository itemCarrinhoRepository;
 
+    private UserRepository userRepository;
+
+    @Autowired
+    private AddressService addressService;
+
     @GetMapping
     public String viewCart(HttpSession session, Model model) {
         ShoppingCart cartItem = (ShoppingCart) session.getAttribute("carrinho");
+        Users user = (Users) session.getAttribute("usuario");
         if (cartItem == null) {
             cartItem = new ShoppingCart();
             session.setAttribute("carrinho", cartItem);
         }
+
+        List<Address> adresses = addressService.getAddressesByUserId(user.getId());
+
 
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
@@ -58,6 +69,13 @@ public class ShoppingCartController {
         model.addAttribute("totalPrice", totalPriceFormatted);
         model.addAttribute("shippingCost", shippingCostFormatted);
         model.addAttribute("total", totalValue);
+
+
+        boolean hasItems = !cartItem.getCartItems().isEmpty();
+        boolean hasAddress = !adresses.isEmpty();
+
+        model.addAttribute("hasItems", hasItems);
+        model.addAttribute("hasAddress", hasAddress);
 
         return "shoppingCart";
     }

@@ -101,9 +101,13 @@
                     </td>
                 </tr>
             </table>
-            <a href="/checkout" class="normal comp">Comprar</a>
+            <a href="/checkout" class="normal comp"
+               th:classappend="${hasItems and hasAddress} ? '' : 'disabled'"
+               th:onclick="${not (hasItems and hasAddress)} ? 'return false;' : ''">Comprar</a>
+            <p th:if="${not (hasItems and hasAddress)}" class="botao__comprar">Seu carrinho está vazio ou você não tem
+                um endereço
+                cadastrado.</p>
         </div>
-
     </div>
 </section>
 

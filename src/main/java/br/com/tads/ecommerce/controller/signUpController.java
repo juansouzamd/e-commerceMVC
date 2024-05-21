@@ -7,13 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/signUp")
 public class signUpController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/signUp")
+    @PostMapping
     public String registerUser(Users user, Model model) {
         if (userRepository.existsByEmail(user.getEmail())) {
             model.addAttribute("error", "O e-mail fornecido já está em uso.");
@@ -24,7 +26,7 @@ public class signUpController {
         return "redirect:/login";
     }
 
-    @GetMapping("/signUp")
+    @GetMapping
     public String showPageRegistration(Model model) {
         model.addAttribute("users", new Users());
         return "signUp";

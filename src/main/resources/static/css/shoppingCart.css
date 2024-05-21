@@ -33,3 +33,10 @@
 .produtos__carrinho{
     width 100%;
 }
+
+.botao__comprar{
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2.5rem;
+}

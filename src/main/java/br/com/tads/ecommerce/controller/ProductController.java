@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 import java.util.List;
 
 @Controller
+@RequestMapping("/")
 public class ProductController {
     private final ProductService produtoService;
 
@@ -21,7 +23,7 @@ public class ProductController {
         this.produtoService = produtoService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String getProdutos(Model model) {
         List<Product> product = produtoService.getAllProducts();
         int sizeList = product.size();
@@ -33,7 +35,7 @@ public class ProductController {
         return "index";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("product/{id}")
     public String getProduto(@PathVariable int id, Model model) {
         Product product = produtoService.getProductById(id);
         List<ProductImage> images = produtoService.getImagesByProductId(product.getId());

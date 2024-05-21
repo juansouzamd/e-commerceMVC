@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private AddressService addressService;
@@ -23,7 +25,7 @@ public class UserController {
         this.addressService = addressService;
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public String showPageUser(Model model, HttpSession session) {
         Users user = (Users) session.getAttribute("usuario");
         if (user != null) {
@@ -44,7 +46,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/address")
+    @PostMapping("/address")
     public String criarEndereco(Address endereco, HttpSession session) {
         Users user = (Users) session.getAttribute("usuario");
         endereco.setUser(user);
