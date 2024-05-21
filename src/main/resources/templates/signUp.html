@@ -16,31 +16,31 @@
                 <h2 class="title">Realize seu cadastro</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Nome" th:field="${users.name}"/>
+                    <input type="text" placeholder="Nome" th:field="${users.name}" required/>
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-file"></i>
-                    <input type="text" placeholder="CPF" th:field="${users.cpf}"/>
+                    <input type="text" placeholder="CPF" th:field="${users.cpf}" required/>
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-phone"></i>
-                    <input type="text" placeholder="Telefone" th:field="${users.phone}"/>
+                    <input type="text" placeholder="Telefone" th:field="${users.phone}" required/>
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-calendar"></i>
-                    <input type="text" placeholder="Data de Nascimento" th:field="${users.birthDate}"/>
+                    <input type="text" placeholder="Data de Nascimento" th:field="${users.birthDate}" required/>
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" placeholder="E-mail" th:field="${users.email}"/>
+                    <input type="email" placeholder="E-mail" th:field="${users.email}" required/>
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Senha" th:field="${users.password}"/>
+                    <input type="password" placeholder="Senha" th:field="${users.password}" required/>
                 </div>
                 <input type="submit" class="btn" value="cadastrar"/>
             </form>

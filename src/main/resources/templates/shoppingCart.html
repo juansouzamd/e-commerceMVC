@@ -65,8 +65,8 @@
             </form>
             <td><img th:src="${item.product.main_image}" alt="Imagem do produto"></td>
             <td th:text="${item.product.name}"></td>
-            <td th:text="'R$ ' + ${item.price}"></td>
-            <td th:text="${item.quantity}"></td>
+            <td th:text="'R$ ' + ${item.price}" class="alinhar"></td>
+            <td th:text="${item.quantity}" class="alinhar"></td>
             <td class="subtotal" th:text="'R$ ' + ${item.totalPrice}"></td>
         </tr>
         </tbody>

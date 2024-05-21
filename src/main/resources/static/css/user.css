@@ -281,3 +281,11 @@ form.sign-in-form {
 .lista__pedidos {
 width: 100%;
 }
+
+.titulo__pedidos{
+  height: 60px;
+}
+
+.alinhar{
+    text-align: center;
+}
