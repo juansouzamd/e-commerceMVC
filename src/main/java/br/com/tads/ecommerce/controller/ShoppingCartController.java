@@ -43,14 +43,10 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductService produtoService;
+    private ProductService productService;
 
-    @Autowired
-    private CartItemRepository itemCarrinhoRepository;
     @Autowired
     private AddressService addressService;
-
-    private UserRepository userRepository;
 
 
     @GetMapping
@@ -120,7 +116,7 @@ public class ShoppingCartController {
         }
 
         // Obtém o produto pelo ID
-        Product product = produtoService.getProductById(produtoId);
+        Product product = productService.getProductById(produtoId);
         // Cria um novo item de carrinho
         CartItem item = new CartItem();
         item.setProduct(product);
@@ -130,7 +126,7 @@ public class ShoppingCartController {
         cartItem.addItem(item);
 
         // Salva o item de carrinho no repositório
-        itemCarrinhoRepository.save(item);
+        productService.saveCartItem(item);
 
         // Redireciona de volta para a página do carrinho de compras
         return "redirect:/shoppingCart";

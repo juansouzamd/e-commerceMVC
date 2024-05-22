@@ -24,6 +24,7 @@ package br.com.tads.ecommerce.controller;
 
 import br.com.tads.ecommerce.model.Users;
 import br.com.tads.ecommerce.repository.UserRepository;
+import br.com.tads.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +35,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/signUp")
 public class signUpController {
+
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping
     public String registerUser(Users user, Model model) {
         // Verifica se o e-mail já está em uso
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userService.existsByEmail(user.getEmail())) {
             // Adiciona uma mensagem de erro ao modelo
             model.addAttribute("error", "O e-mail fornecido já está em uso.");
             // Retorna a página de registro com uma mensagem de erro
             return "login";
         }
         // Salva o novo usuário no banco de dados
-        userRepository.save(user);
+        userService.createUser(user);
         // Adiciona uma mensagem de sucesso ao modelo
         model.addAttribute("message", "Usuário cadastrado com sucesso!");
         // Redireciona para a página de login após o registro bem-sucedido

@@ -25,6 +25,7 @@ package br.com.tads.ecommerce.controller;
 import br.com.tads.ecommerce.model.*;
 import br.com.tads.ecommerce.repository.OrdersRepository;
 import br.com.tads.ecommerce.service.AddressService;
+import br.com.tads.ecommerce.service.OrdersService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ import static java.lang.Double.parseDouble;
 public class CheckoutController {
 
     @Autowired
-    private OrdersRepository ordersRepository;
+    private OrdersService ordersService;
 
     @Autowired
     private AddressService addressService;
@@ -86,7 +87,7 @@ public class CheckoutController {
             order.setValueTotal(cartItem.getTotalPrice());
             order.setAddress(opcaoEndereco);
             order.setQuantity(cartItem.getQuantity());
-            ordersRepository.save(order);
+            ordersService.saveOrder(order);
             orders.add(order);
         }
 

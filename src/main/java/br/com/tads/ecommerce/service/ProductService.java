@@ -22,8 +22,10 @@
 
 package br.com.tads.ecommerce.service;
 
+import br.com.tads.ecommerce.model.CartItem;
 import br.com.tads.ecommerce.model.ProductImage;
 import br.com.tads.ecommerce.model.Product;
+import br.com.tads.ecommerce.repository.CartItemRepository;
 import br.com.tads.ecommerce.repository.ProductImageRepository;
 import br.com.tads.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +38,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private ProductImageRepository productImageRepository;
+    private CartItemRepository cartItemRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ProductImageRepository productImageRepository) {
+    public ProductService(ProductRepository productRepository, ProductImageRepository productImageRepository,
+                          CartItemRepository cartItemRepository) {
         this.productRepository = productRepository;
         this.productImageRepository = productImageRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
     public Product getProductById(int id) {
@@ -56,5 +61,11 @@ public class ProductService {
     public List<ProductImage> getImagesByProductId(Long id) {
         // Obtém todas as imagens associadas a um determinado ID de produto
         return productImageRepository.findByProductId(id);
+    }
+
+    public void saveCartItem(CartItem item)
+    {
+        // salva o item do pedido na tabela CarItem.
+        cartItemRepository.save(item);
     }
 }

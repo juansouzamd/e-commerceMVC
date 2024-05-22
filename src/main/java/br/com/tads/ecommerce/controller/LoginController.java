@@ -24,6 +24,7 @@ package br.com.tads.ecommerce.controller;
 
 import br.com.tads.ecommerce.model.Users;
 import br.com.tads.ecommerce.repository.UserRepository;
+import br.com.tads.ecommerce.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
     @Autowired
-    private UserRepository usuarioRepository;
+    private UserService userService;
+
 
     // Método showLoginPage: Manipula solicitações GET para exibir a página de login.
     @GetMapping("/login")
@@ -54,7 +56,7 @@ public class LoginController {
                             @RequestParam("password") String password,
                             Model model, HttpSession session) {
         // Busca o usuário pelo e-mail no banco de dados.
-        Users user = usuarioRepository.findByEmail(email);
+        Users user = userService.findByEmail(email);
 
         // Verifica se o usuário existe e se a senha está correta.
         if (user != null && user.getPassword().equals(password)) {

@@ -23,6 +23,7 @@
 package br.com.tads.ecommerce.service;
 
 import br.com.tads.ecommerce.model.Address;
+import br.com.tads.ecommerce.model.CartItem;
 import br.com.tads.ecommerce.model.Orders;
 import br.com.tads.ecommerce.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class OrdersService {
     public List<Orders> getOrdersByUserId(Long userId) {
         // Implementação para buscar todos os endereços de um usuário
         return ordersRepository.findByUserId(userId);
+    }
+
+    public void saveOrder(Orders order)
+    {
+        // Salva o pedido na tabela Orders
+        ordersRepository.save(order);
     }
 }
