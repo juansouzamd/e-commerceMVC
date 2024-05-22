@@ -1,3 +1,21 @@
+/*
+    Nome do Projeto: E-commerce
+    Data de Criação: 15/02/2024
+    Versão: 5
+    Data da Última Modificação: 22/05/2024
+    Equipe de Desenvolvimento:
+        - Juan Souza Santos
+        - Maria Helena dos Santos
+        - Pedro Ferreira Lima
+        - Thiago Shigueto Hossaka
+
+    Este script é responsável por alterar dinamicamente a imagem principal com base nas miniaturas de imagem clicadas pelo usuário.
+    Além disso, verifica o ID da rota para determinar se o produto é uma camiseta e, nesse caso, atualiza as opções de tamanho disponíveis.
+    Por fim, valida se o usuário selecionou um tamanho antes de enviar o formulário.
+
+*/
+
+
 // Obtém a imagem principal
 var mainImg = document.getElementById("MainImg");
 
@@ -29,6 +47,7 @@ if (id >= 8) {
     });
 }
 
+// Esta função valida o formulário antes de ser enviado.
 function validateForm(event) {
         var select = document.getElementById("sizeSelect");
         if (select.selectedIndex === 0) {
