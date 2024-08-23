@@ -58,7 +58,7 @@ O sistema adota uma arquitetura MVC (Model-View-Controller) para separar as resp
 
 1. **Clone o Repositório**
    ```bash
-   git clone https://github.com/usuario/ecommerce.git
+   git clone https://github.com/juansouzamd/e-commerceMVC
 
 ## Uso e Funcionalidades
 
